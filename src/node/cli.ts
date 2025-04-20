@@ -2,7 +2,7 @@ import process from 'process'
 import { cac } from 'cac'
 import { build } from './build'
 
-const cli = cac('vite-ssg-react')
+const cli = cac('vite-react-static')
 
 cli
   .command('build', 'Build SSG')
