@@ -1,0 +1,27 @@
+{
+  "name": "vite-ssg-react",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "unbuild",
+    "build": "unbuild",
+    "lint": "eslint ."
+  },
+  "bin": {
+    "vite-ssg-react": "bin/vite-ssg-react.js"
+  },
+  "dependencies": {
+    "cac": "^6.7.14"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.22.0",
+    "eslint": "^9.22.0",
+    "globals": "^16.0.0",
+    "process": "^0.11.10",
+    "typescript": "~5.7.2",
+    "typescript-eslint": "^8.26.1",
+    "unbuild": "^3.5.0",
+    "vite": "^6.3.1"
+  }
+}
