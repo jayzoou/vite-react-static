@@ -12,6 +12,7 @@ cli
   .option('--config, -c <config>', 'The vite config file to use')
   .option('--base, -b <base>', 'The base path to render')
   .action(async (args) => {
+    console.log('args', args)
     await build()
   })
 

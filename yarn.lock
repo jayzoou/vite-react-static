@@ -3932,6 +3932,8 @@ __metadata:
   resolution: "vite-react-static@portal:../../::locator=multiple-pages%40workspace%3Aexamples%2Fmultiple-pages"
   dependencies:
     cac: "npm:^6.7.14"
+    react: "npm:^19.0.0"
+    react-dom: "npm:^19.0.0"
   bin:
     vite-react-static: bin/vite-react-static.js
   languageName: node
@@ -3946,6 +3948,8 @@ __metadata:
     eslint: "npm:^9.22.0"
     globals: "npm:^16.0.0"
     process: "npm:^0.11.10"
+    react: "npm:^19.0.0"
+    react-dom: "npm:^19.0.0"
     typescript: "npm:~5.7.2"
     typescript-eslint: "npm:^8.26.1"
     unbuild: "npm:^3.5.0"
