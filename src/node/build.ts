@@ -7,7 +7,12 @@ export async function build() {
   console.log('Building the project...');
   const entry = await detectEntry(process.cwd())
   console.log(`Entry file: ${entry}`);
-  render()
+  const appHtml = await render()
+  console.log(appHtml, 'appHtml')
+  const out = 'dist'
+  const filename = 'app.html'
+  await fs.mkdir(join(out, dirname(filename)), { recursive: true })
+  await fs.writeFile(join(out, filename), appHtml, 'utf-8')
   // Here you would add the logic to build your project.
   // This is a placeholder for the actual build process.
 }

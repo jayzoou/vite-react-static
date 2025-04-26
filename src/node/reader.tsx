@@ -15,5 +15,6 @@ export async function render() {
     onShellReady() {
       pipe(writable) 
     }
-  }); 
+  })
+  return writable.getPromise()
 }
