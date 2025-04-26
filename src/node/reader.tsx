@@ -1,18 +1,6 @@
-import React from 'react';
-import { renderToPipeableStream } from 'react-dom/server';
-import { Writable } from 'stream'; 
-
-class MyWritable extends Writable {
-  constructor() {
-    super();
-  }
-
-  _write(chunk, encoding, callback) {
-    // 处理输出的 chunk
-    console.log('chunk', chunk.toString());
-    callback();
-  }
-}
+import React from 'react'
+import { renderToPipeableStream } from 'react-dom/server'
+import { BufferWritable } from './utils/bufferWritable' 
 
 // 示例 React 组件
 const Page = ({ title, content }) => (
@@ -21,7 +9,7 @@ const Page = ({ title, content }) => (
 
 export async function render() {
 
-  const writable = new MyWritable();
+  const writable = new BufferWritable();
   // console.log(renderToPipeableStream, 'renderToPipeableStream')
   const { pipe } = renderToPipeableStream(<Page title="Hello" content="World" />, {
     onShellReady() {
