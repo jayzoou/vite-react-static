@@ -1,6 +1,6 @@
 import React from 'react'
 import { createRoot, hydrateRoot } from 'react-dom/client'
-import { createBrowserRouter, RouterProvider, createStaticRouter, StaticRouterProvider } from 'react-router-dom'
+import { createBrowserRouter, RouterProvider, createStaticRouter } from 'react-router-dom'
 import { ViteReactStaticClientOptions } from '../types'
 
 export function viteReactStatic(
@@ -37,7 +37,7 @@ export function viteReactStatic(
 
   if(!import.meta.env.SSR) {
     (async () => {
-      const { App, routes } = await creatRoot()
+      const { App } = await creatRoot()
 
       if(import.meta.env.DEV) { 
         createRoot(
