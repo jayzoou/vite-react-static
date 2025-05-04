@@ -1,6 +1,6 @@
 import React from 'react'
 import { createRoot, hydrateRoot } from 'react-dom/client'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { createBrowserRouter, RouterProvider, createStaticRouter, StaticRouterProvider } from 'react-router-dom'
 import { ViteReactStaticClientOptions } from '../types'
 
 export function viteReactStatic(
@@ -15,11 +15,12 @@ export function viteReactStatic(
     rootContainer = '#iroot',
   } = options ?? {}
 
-  const isSSR = import.meta.env.SSR
+  function creatRoot(routePath = '/') {
 
-  function creatRoot() {
-
-    const router = createBrowserRouter(routes)
+    const router = import.meta.env.SSR ? createStaticRouter(routes, {
+      location: routePath,
+      matches: []
+    }) : createBrowserRouter(routes)
 
     const App = () => {
       return (
@@ -27,7 +28,6 @@ export function viteReactStatic(
      )
     }
 
-    console.log(routes, 'rrr')
     return {
       App,
       routes,
@@ -35,7 +35,7 @@ export function viteReactStatic(
     }
   }
 
-  if(!isSSR) {
+  if(!import.meta.env.SSR) {
     (async () => {
       const { App, routes } = await creatRoot()
 

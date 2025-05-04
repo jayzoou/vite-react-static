@@ -4577,6 +4577,7 @@ __metadata:
     cac: "npm:^6.7.14"
     react: "npm:^19.0.0"
     react-dom: "npm:^19.0.0"
+    react-router-dom: "npm:^7.5.3"
   bin:
     vite-react-static: bin/vite-react-static.js
   languageName: node
@@ -4593,6 +4594,7 @@ __metadata:
     process: "npm:^0.11.10"
     react: "npm:^19.0.0"
     react-dom: "npm:^19.0.0"
+    react-router-dom: "npm:^7.5.3"
     typescript: "npm:~5.7.2"
     typescript-eslint: "npm:^8.26.1"
     unbuild: "npm:^3.5.0"
