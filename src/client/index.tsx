@@ -30,11 +30,23 @@ export function viteReactStatic(
   if(!isSSR) {
     (async () => {
       const { routes } = await creatRoot()
-      const root = hydrateRoot(
-        document.getElementById('root')!,
-        <App routes={routes} />
-      )
-      console.log(root, 'root')
+
+      if(import.meta.env.DEV) { 
+        const root = createRoot(
+          document.getElementById('root')!,
+        )
+        root.render(
+          <React.StrictMode>
+            <App routes={routes} />
+          </React.StrictMode>,
+        )
+      } else {
+        const root = hydrateRoot(
+          document.getElementById('root')!,
+          <App routes={routes} />
+        )
+        console.log(root, 'root') 
+      }
     })()
   }
 

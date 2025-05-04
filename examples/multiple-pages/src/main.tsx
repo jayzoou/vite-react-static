@@ -1,5 +1,5 @@
 import { StrictMode, Suspense } from 'react'
-import { createRoot } from 'react-dom/client'
+// import { createRoot } from 'react-dom/client'
 import { viteReactStatic } from 'vite-react-static'
 import './index.css'
 import App from './App.tsx'
