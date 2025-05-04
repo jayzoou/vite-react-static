@@ -12,7 +12,7 @@ export function viteReactStatic(
     transformState,
     registerComponents = true,
     useHead = true,
-    rootContainer = '#iroot',
+    rootContainer = '#root',
   } = options ?? {}
 
   function creatRoot(routePath = '/') {
@@ -40,20 +40,18 @@ export function viteReactStatic(
       const { App, routes } = await creatRoot()
 
       if(import.meta.env.DEV) { 
-        const root = createRoot(
-          document.getElementById('root')!,
-        )
-        root.render(
+        createRoot(
+          document.querySelector(rootContainer)!,
+        ).render(
           <React.StrictMode>
             <App />
           </React.StrictMode>,
         )
       } else {
-        const root = hydrateRoot(
-          document.getElementById('root')!,
+        hydrateRoot(
+          document.querySelector(rootContainer)!,
           <App />
         )
-        console.log(root, 'root') 
       }
     })()
   }
