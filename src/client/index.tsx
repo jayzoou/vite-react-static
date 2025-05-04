@@ -1,9 +1,9 @@
 import React from 'react'
 import { createRoot, hydrateRoot } from 'react-dom/client'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { ViteReactStaticClientOptions } from '../types'
 
 export function viteReactStatic(
-  App,
   routerOptions,
   options?: ViteReactStaticClientOptions,
 ) {
@@ -17,19 +17,27 @@ export function viteReactStatic(
 
   const isSSR = import.meta.env.SSR
 
-  console.log('App', App)
   function creatRoot() {
+
+    const router = createBrowserRouter(routes)
+
+    const App = () => {
+      return (
+        <RouterProvider router={router} /> 
+     )
+    }
 
     console.log(routes, 'rrr')
     return {
       App,
-      routes 
+      routes,
+      router
     }
   }
 
   if(!isSSR) {
     (async () => {
-      const { routes } = await creatRoot()
+      const { App, routes } = await creatRoot()
 
       if(import.meta.env.DEV) { 
         const root = createRoot(
@@ -37,13 +45,13 @@ export function viteReactStatic(
         )
         root.render(
           <React.StrictMode>
-            <App routes={routes} />
+            <App />
           </React.StrictMode>,
         )
       } else {
         const root = hydrateRoot(
           document.getElementById('root')!,
-          <App routes={routes} />
+          <App />
         )
         console.log(root, 'root') 
       }

@@ -12,6 +12,7 @@
   "dependencies": {
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-router-dom": "^7.5.3",
     "vite-react-static": "portal:../../"
   },
   "devDependencies": {
@@ -25,6 +26,7 @@
     "globals": "^16.0.0",
     "typescript": "~5.7.2",
     "typescript-eslint": "^8.26.1",
+    "unocss": "^66.1.0-beta.11",
     "vite": "^6.3.1"
   }
 }

@@ -2,18 +2,21 @@ import { StrictMode, Suspense } from 'react'
 // import { createRoot } from 'react-dom/client'
 import { viteReactStatic } from 'vite-react-static'
 import './index.css'
-import App from './App.tsx'
+import './App.css'
+import 'virtual:uno.css'
+// import App from './App.tsx'
+import Layout from './component/Layout.tsx'
 
 const modules = import.meta.glob(
   [
-    '../../../pages/**/*.mdx',
+    './pages/**/*.tsx',
   ], 
   { eager: true })
 
-const routes = Object.keys(modules)
+const route = Object.keys(modules)
   .map((filename: string) => {
     const path = filename
-      .replace (/\..\/\..\/(pages)/, '')
+      .replace (/\.\/(pages)/, '')
       .replace(/\//g,'')
       .replace(/\.(mdx|tsx)$/, '')
       .replace('Index', '')
@@ -22,7 +25,17 @@ const routes = Object.keys(modules)
     return { path: `/${path}`, element: <Suspense><Component /></Suspense> }
   })
 
-export const createRoot = viteReactStatic(App, {
+const routes = [
+  {
+    path: '/',
+    element: <Layout />, 
+    children: route
+  },
+]
+
+console.log(routes, 'routes')
+
+export const createRoot = viteReactStatic({
   routes 
 })
 
