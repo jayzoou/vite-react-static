@@ -5,9 +5,9 @@ export interface ViteReactStaticClientOptions {
   /**
    * The application's root container query selector.
    *
-   * @default `#app`
+   * @default `root`
    */
-  rootContainer?: string | Element
+  rootContainerId?: string
   /**
    * Enable Vue hydration on client side
    *

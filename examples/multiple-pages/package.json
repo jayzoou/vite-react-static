@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite-react-static build --mode ssg ",
+    "build": "vite-react-static build --mode ssg --base /",
     "lint": "eslint .",
     "preview": "vite preview"
   },

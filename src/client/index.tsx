@@ -1,6 +1,6 @@
 import React from 'react'
 import { createRoot, hydrateRoot } from 'react-dom/client'
-import { createBrowserRouter, RouterProvider, createStaticRouter } from 'react-router-dom'
+import { createBrowserRouter, RouterProvider, createStaticRouter, StaticRouterProvider } from 'react-router-dom'
 import { ViteReactStaticClientOptions } from '../types'
 
 export function viteReactStatic(
@@ -12,26 +12,34 @@ export function viteReactStatic(
     transformState,
     registerComponents = true,
     useHead = true,
-    rootContainer = '#root',
+    rootContainerId = 'root',
   } = options ?? {}
 
   function creatRoot(routePath = '/') {
 
     const router = import.meta.env.SSR ? createStaticRouter(routes, {
       location: routePath,
-      matches: []
-    }) : createBrowserRouter(routes)
+      basename: '/',
+      matches: [],
+    }) : createBrowserRouter(routes, {
+      basename: '/',
+    })
 
     const App = () => {
       return (
-        <RouterProvider router={router} /> 
+        import.meta.env.SSR ? <StaticRouterProvider router={router} context={{
+          location: routePath,
+          basename: '/',
+          matches: [],
+        }} /> : 
+        <RouterProvider router={router} />
      )
     }
 
     return {
       App,
       routes,
-      router
+      rootContainerId,
     }
   }
 
@@ -39,9 +47,11 @@ export function viteReactStatic(
     (async () => {
       const { App } = await creatRoot()
 
-      if(import.meta.env.DEV) { 
+      const isSSG = document.querySelector('[data-server-rendered=true]') !== null
+
+      if(import.meta.env.DEV || !isSSG) { 
         createRoot(
-          document.querySelector(rootContainer)!,
+          document.getElementById(rootContainerId)!,
         ).render(
           <React.StrictMode>
             <App />
@@ -49,8 +59,8 @@ export function viteReactStatic(
         )
       } else {
         hydrateRoot(
-          document.querySelector(rootContainer)!,
-          <App />
+          document.getElementById(rootContainerId)!,
+          App
         )
       }
     })()

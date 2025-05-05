@@ -12,17 +12,17 @@ const modules = import.meta.glob(
     './pages/**/*.tsx',
   ], 
   { eager: true })
-
+console.log(modules, 'mmmm')
 const route = Object.keys(modules)
   .map((filename: string) => {
     const path = filename
       .replace (/\.\/(pages)/, '')
-      .replace(/\//g,'')
+      .replace(/^\//,'')
       .replace(/\.(mdx|tsx)$/, '')
       .replace('Index', '')
     //@ts-ignore
     const Component = modules[filename].default
-    return { path: `/${path}`, element: <Suspense><Component /></Suspense> }
+    return { path: `/${path}`, element: <Component />}
   })
 
 const routes = [

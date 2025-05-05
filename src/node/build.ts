@@ -45,6 +45,7 @@ export async function build(staticOptions: any, viteConfig = {}) {
   const ssgOutTempFolder = join(root, '.vite-static-temp')
   const ssgOut = join(ssgOutTempFolder, Math.random().toString(36).substring(2, 12))
   const ssrEntry = await join(root, entry)
+  console.log('ssrEntry', ssrEntry)
   const format = 'esm'
   await viteBuild(mergeConfig(viteConfig, {
     base,
@@ -77,26 +78,32 @@ export async function build(staticOptions: any, viteConfig = {}) {
   const prefix = (format === 'esm' && process.platform === 'win32') ? 'file://' : ''
   const ext = format === 'esm' ? '.mjs' : '.cjs'
 
+  let indexHTML = await fs.readFile(join(out, 'index.html'), 'utf-8')
+
   const serverEntry = prefix + join(ssgOut, parse(ssrEntry).name + ext).replace(/\\/g, '/')
   console.log('Server entry:', serverEntry)
   const { createRoot } = await import(serverEntry)
-  const { App } = createRoot()
-  console.log('App:', App)
-  const appHTML = await renderReactNode({
-    ReactNode: App
-  })
-  console.log(appHTML, 'appHtml')
+  const { routes } = createRoot()
+  const routesPaths = routesToPaths(routes)
+  for (const route of routesPaths) {
+    const routeOut = join(out, route)
+    const { App, rootContainerId } = createRoot(route)
+    const appHTML = await renderReactNode({
+      ReactNode: App
+    })
+
+    const renderedHTML = await renderHTML({
+      rootContainerId,
+      indexHTML,
+      appHTML,
+    })
+    if(route !== '/') {
+      await fs.mkdir(routeOut, { recursive: true }) 
+    }
+    await fs.writeFile(join(routeOut, filename), renderedHTML, 'utf-8')
+  }
 
   await fs.rm(ssgOutTempFolder, { recursive: true, force: true })
-  let indexHTML = await fs.readFile(join(out, 'index.html'), 'utf-8')
-  const renderedHTML = await renderHTML({
-    indexHTML,
-    appHTML,
-  })
-  await fs.mkdir(join(out, dirname(filename)), { recursive: true })
-  await fs.writeFile(join(out, filename), renderedHTML, 'utf-8')
-  // Here you would add the logic to build your project.
-  // This is a placeholder for the actual build process.
 }
 
 
@@ -112,4 +119,15 @@ async function detectEntry(root: string) {
     return scriptType === 'module'
   }) || []
   return entry || 'src/main.ts'
+}
+
+function routesToPaths(routes) {
+  return routes.map((route) => {
+    const { path, children } = route
+    if (children) {
+      return [path, ...routesToPaths(children)]
+    }
+    return path
+  })
+    .flat()
 }

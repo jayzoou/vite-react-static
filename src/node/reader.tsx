@@ -2,18 +2,10 @@ import React from 'react'
 import { renderToPipeableStream } from 'react-dom/server'
 import { BufferWritable } from './utils/bufferWritable' 
 
-// 示例 React 组件
-const Page = ({ title, content }) => (
-  <div>pppp</div>
-)
-
 export async function renderReactNode({
   ReactNode,
 }) {
-  console.log('renderReactNode', ReactNode)
-
   const writable = new BufferWritable()
-  // console.log(renderToPipeableStream, 'renderToPipeableStream')
   const { pipe } = renderToPipeableStream(<ReactNode />, {
     onShellReady() {
       pipe(writable) 
@@ -25,11 +17,13 @@ export async function renderReactNode({
 export async function renderHTML({
   indexHTML,
   appHTML,
+  rootContainerId,
   staticOptions = {},
   viteConfig = {},
 }: {
   indexHTML: string
   appHTML: string
+  rootContainerId: string
   staticOptions?: any
   viteConfig?: any
 }) {
@@ -40,9 +34,9 @@ export async function renderHTML({
   //   '<div id="app"></div>',
   //   `<div id="app">${appHTML}</div>`
   // )
-  // return html
+  // return htm
   return indexHTML.replace(
-    '<div id="root"></div>',
-    `<div id="root">${appHTML}</div>`
+    `<div id="${rootContainerId}"></div>`,
+    `<div id="${rootContainerId}" data-server-rendered="true">${appHTML}</div>`
   )
 }
