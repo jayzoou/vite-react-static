@@ -24,17 +24,15 @@ export class BufferWritable extends Writable {
   }
 
   _write(chunk: string, encoding: unknown, callback: () => void) {
-    // 处理输出的 chunk
     this._buffer += chunk.toString()
     callback()
   }
 
   end() {
-    // 处理结束逻辑
     this._p.resolve(this._buffer)
   }
 
-  getPromise() {
+  getData() {
     return this._p.promise
   }
 }

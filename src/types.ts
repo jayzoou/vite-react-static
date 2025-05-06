@@ -8,10 +8,4 @@ export interface ViteReactStaticClientOptions {
    * @default `root`
    */
   rootContainerId?: string
-  /**
-   * Enable Vue hydration on client side
-   *
-   * @default false
-   */
-  hydration?: boolean
 }

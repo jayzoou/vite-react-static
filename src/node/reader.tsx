@@ -11,7 +11,7 @@ export async function renderReactNode({
       pipe(writable) 
     }
   })
-  return writable.getPromise()
+  return writable.getData()
 }
 
 export async function renderHTML({
@@ -27,14 +27,6 @@ export async function renderHTML({
   staticOptions?: any
   viteConfig?: any
 }) {
-  // console.log('renderHTML', indexHTML, appHTML, staticOptions, viteConfig)
-  // const { script } = staticOptions
-  // const { injectScript } = viteConfig
-  // const html = indexHTML.replace(
-  //   '<div id="app"></div>',
-  //   `<div id="app">${appHTML}</div>`
-  // )
-  // return htm
   return indexHTML.replace(
     `<div id="${rootContainerId}"></div>`,
     `<div id="${rootContainerId}" data-server-rendered="true">${appHTML}</div>`

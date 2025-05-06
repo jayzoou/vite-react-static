@@ -1,8 +1,14 @@
 {
   "name": "vite-react-static",
   "packageManager": "yarn@4.9.1",
-  "version": "0.0.2-beta.1",
+  "version": "0.0.2",
   "license": "MIT",
+  "homepage": "https://github.com/jayzoou/vite-react-static",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jayzoou/vite-react-static"
+  },
+  "bugs": "https://github.com/jayzoou/vite-react-static/issues",
   "scripts": {
     "dev": "unbuild",
     "build": "unbuild",
