@@ -8,7 +8,7 @@ Static-site generation for React 18+ with Vite.
 ## Install
 
 <pre>
-<b>npm i -D vite-react-static</b>
+<b>npm i -D vite-react-static</b> <em>react-router-dom</em>
 </pre>
 
 ```diff
