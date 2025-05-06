@@ -9,12 +9,12 @@ export async function build(staticOptions: any, viteConfig = {}) {
   console.log('Building the project...', staticOptions)
   console.log('Vite config:', viteConfig)
   const cwd = process.cwd()
-  const root = cwd
-  const outDir = 'dist'
-  const out = isAbsolute(outDir) ? outDir : join(root, outDir)
   const nodeEnv = process.env.NODE_ENV || 'production'
   const mode = process.env.MODE || staticOptions.mode || nodeEnv
   const config = await resolveConfig(viteConfig, 'build', mode, nodeEnv)
+  const root = config.root || cwd
+  const outDir = config.build.outDir || 'dist'
+  const out = isAbsolute(outDir) ? outDir : join(root, outDir)
   const mergedOptions = Object.assign({}, config.staticOptions || {}, staticOptions)
   const { 
     script = 'sync',
