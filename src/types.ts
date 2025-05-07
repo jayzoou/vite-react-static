@@ -1,3 +1,5 @@
+import type { RouteObject } from 'react-router-dom'
+
 export interface ViteReactStaticClientOptions {
   transformState?: (state: any) => any
   registerComponents?: boolean
@@ -8,4 +10,10 @@ export interface ViteReactStaticClientOptions {
    * @default `root`
    */
   rootContainerId?: string
+}
+
+
+export interface ViteReactStaticClientResource {
+  routes: RouteObject[],
+  basename?: string
 }

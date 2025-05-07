@@ -1,13 +1,15 @@
 import React from 'react'
+import type { ReactNode } from 'react'
 import { createRoot, hydrateRoot } from 'react-dom/client'
 import { createBrowserRouter, RouterProvider, createStaticRouter, StaticRouterProvider } from 'react-router-dom'
-import { ViteReactStaticClientOptions } from '../types'
+import { ViteReactStaticClientOptions, ViteReactStaticClientResource } from '../types'
 
 export function viteReactStatic(
-  routerOptions,
+  resource: ReactNode | ViteReactStaticClientResource,
   options?: ViteReactStaticClientOptions,
 ) {
-  const { routes } = routerOptions
+  const hasRoutes = typeof resource === 'object' && resource.routes
+
   const {
     transformState,
     registerComponents = true,
@@ -16,7 +18,15 @@ export function viteReactStatic(
   } = options ?? {}
 
   function creatRoot(routePath = '/') {
+    if (!hasRoutes) {
+      return {
+        App: resource,
+        routes: undefined,
+        rootContainerId, 
+      }
+    }
 
+    const { routes } = resource
     const router = import.meta.env.SSR ? createStaticRouter(routes, {
       location: routePath,
       basename: '/',
@@ -58,9 +68,10 @@ export function viteReactStatic(
           </React.StrictMode>,
         )
       } else {
+        const app = hasRoutes ? App : <App />
         hydrateRoot(
           document.getElementById(rootContainerId)!,
-          App
+          app
         )
       }
     })()

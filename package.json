@@ -1,7 +1,7 @@
 {
   "name": "vite-react-static",
   "packageManager": "yarn@4.9.1",
-  "version": "0.0.4",
+  "version": "0.1.0",
   "license": "MIT",
   "homepage": "https://github.com/jayzoou/vite-react-static",
   "repository": {

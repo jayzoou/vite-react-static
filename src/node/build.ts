@@ -1,6 +1,6 @@
 import process from 'process'
 import fs from 'fs/promises'
-import { dirname, isAbsolute, join, parse } from 'path'
+import { isAbsolute, join, parse } from 'path'
 import { mergeConfig, resolveConfig, build as viteBuild } from 'vite'
 import { renderReactNode, renderHTML } from './reader'
 
@@ -124,8 +124,10 @@ async function detectEntry(root: string) {
   return entry || 'src/main.ts'
 }
 
-function routesToPaths(routes) {
-  return routes.map((route) => {
+function routesToPaths(routes?: any) {
+  if(!routes) return ['/']
+
+  return routes.map((route: any) => {
     const { path, children } = route
     if (children) {
       return [path, ...routesToPaths(children)]
