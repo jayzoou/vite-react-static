@@ -68,7 +68,7 @@ export function viteReactStatic(
           </React.StrictMode>,
         )
       } else {
-        const app = hasRoutes ? App : <App />
+        const app = <App />
         hydrateRoot(
           document.getElementById(rootContainerId)!,
           app

@@ -1,12 +1,12 @@
 {
   "name": "vite-react-static",
   "packageManager": "yarn@4.9.1",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "license": "MIT",
   "homepage": "https://github.com/jayzoou/vite-react-static",
   "repository": {
     "type": "git",
-    "url": "https://github.com/jayzoou/vite-react-static"
+    "url": "git+https://github.com/jayzoou/vite-react-static.git"
   },
   "bugs": "https://github.com/jayzoou/vite-react-static/issues",
   "keywords": [
@@ -23,7 +23,9 @@
     "lint": "eslint ."
   },
   "sideEffects": false,
-  "bin": "bin/vite-react-static.js",
+  "bin": {
+    "vite-react-static": "bin/vite-react-static.js"
+  },
   "files": [
     "*.d.ts",
     "bin",
